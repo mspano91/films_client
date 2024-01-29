@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters", "relationJoins", "nativeDistinct"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Movies {
+  id                Int             @id @unique
+  original_language String
+  original_title    String          @unique
+  overview          String
+  popularity        Float
+  poster_path       String          @unique
+  release_date      DateTime
+  title             String          @unique
+  video             Boolean
+  vote_average      Float
+  genre_ids         Int[] // Cambiado a un array de Int
+  categories        Categories[]
+  MovieCategory     MovieCategory[]
+}
+
+model Categories {
+  id            Int             @id @unique
+  name          String          @unique
+  movies        Movies[]
+  MovieCategory MovieCategory[]
+}
+
+model MovieCategory {
+  id         Int
+  movieId    Int
+  categoryId Int
+  movies     Movies?     @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  categories Categories? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([movieId, categoryId])
+  @@index([categoryId], name: "categoryId")
+  @@index([movieId], name: "movieId")
+}
