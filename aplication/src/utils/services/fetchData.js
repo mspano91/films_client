@@ -11,4 +11,15 @@ const fetchData = async () => {
   }
 };
 
-export default fetchData;
+const fetchCategories = async () => {
+  try {
+    const response = await axios.get(`http://localhost:3002/cat`);
+    const cate = response.data;
+    console.log(cate);
+    return cate;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+module.exports = { fetchData, fetchCategories };

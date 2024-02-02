@@ -1,8 +1,9 @@
 "use client";
 import { setAllMovies } from "@/redux/slice";
-import fetchData from "@/utils/services/fetchData";
+import { fetchData } from "@/utils/services/fetchData";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import SearchBar from "../searchBar/SearchBar";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,8 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div>
+    <div className="border border-red-500 p-4 flex flex-col items-center justify-center w-200">
+      <SearchBar />
       <h1> este va ser el main puta madre</h1>
       {movies
         ? movies.map((mov, index) => (
