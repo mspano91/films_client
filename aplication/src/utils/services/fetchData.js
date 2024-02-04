@@ -21,5 +21,15 @@ const fetchCategories = async () => {
     throw new Error(error.message);
   }
 };
+const fetchTrailers = async () => {
+  try {
+    const response = await axios.get(`http://localhost:3002/trailer`);
+    const trailer = response.data;
+    console.log(trailer);
+    return trailer;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
 
-module.exports = { fetchData, fetchCategories };
+module.exports = { fetchData, fetchCategories, fetchTrailers };
