@@ -21,11 +21,12 @@ const fetchCategories = async () => {
     throw new Error(error.message);
   }
 };
-const fetchTrailers = async () => {
+const fetchTrailers = async (id) => {
+  console.log(id);
   try {
-    const response = await axios.get(`http://localhost:3002/trailer`);
+    const response = await axios.get(`http://localhost:3002/trailer/${id}`);
     const trailer = response.data;
-    console.log(trailer);
+    console.log(response);
     return trailer;
   } catch (error) {
     throw new Error(error.message);

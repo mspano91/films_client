@@ -9,64 +9,64 @@ const URL_IMAGE = "https://image.tmdb.org/t/p/original";
 export default function Movies() {
   const dispatch = useDispatch();
   const reduxMovies = useSelector((state) => state.movies.allMovies);
-
   const [playing, setPlaying] = useState(false);
   const [trailer, setTrailer] = useState(null);
   const [portada, setPortada] = useState(null);
-  const [movie, setMovie] = useState({ title: "Loading Movies" });
+  const [movie, setMovie] = useState(null);
 
   const fetchMovies = async () => {
-    const filmes = await fetchData();
-    dispatch(setAllMovies(filmes));
-  }; //esta funcion trae la info de la api y la mete en el redux, donde despues la llamamos arriba como movie.
+    const filmes = await fetchData(); //bring movie data from the back
+    dispatch(setAllMovies(filmes)); //put de data into redux state
+    setMovie(filmes[0]); //setting portada
+  };
 
-  const fetchTrailer = async (id) => {
-    console.log(id); //llega el id perfecto
-    try {
-      const trailers = await fetchTrailers(id);
-      console.log(`aca estan los ${trailers}`); //ACA ESTA EL PROBLEMA NO RECIBE LA INFO
-      // setTrailer(trailers);
-    } catch (error) {
-      console.error("Error fetching trailer:", error);
+  const nuevaPortada = (selectedMovieId) => {
+    const selectedMovie = reduxMovies.find((mov) => mov.id === selectedMovieId); //taking body information to show different portada
+    if (selectedMovie) {
+      setPortada(selectedMovie);
+      // fetchTrailer(selectedMovie.id);
     }
   };
 
   const selectMovie = async (selectedMovie) => {
     fetchTrailer(selectedMovie.id);
-    console.log(`aca estan los ${selectedMovie.name}`);
-    console.log(selectedMovie.id);
     setMovie(selectedMovie);
-    window.scrollTo(0, 0);
-
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
     if (movie) {
       nuevaPortada();
     }
   };
 
-  const nuevaPortada = (selectedMovieId) => {
-    const selectedMovie = reduxMovies.find((mov) => mov.id === selectedMovieId);
-    console.log(selectedMovie);
-    if (selectedMovie) {
-      setPortada(selectedMovie);
-      fetchTrailer(selectedMovie.id);
+  const fetchTrailer = async (id) => {
+    console.log(id); //llega el id perfecto
+    try {
+      const response = await fetchTrailers(id);
+
+      console.log(response); //ACA ESTA EL PROBLEMA NO RECIBE LA INFO
+      setTrailer(response);
+    } catch (error) {
+      console.error("Error fetching trailer:", error);
     }
   };
 
   useEffect(() => {
-    fetchMovies();
+    fetchMovies(); // call movies array
   }, []);
 
   useEffect(() => {
     nuevaPortada();
-  }, [movie]);
+  }, [reduxMovies, movie]); // when movie state change, useEffect call again nuevaPortada function to update
 
   return (
     <div>
       <div>
         {movie ? (
-          <div className="relative w-full " style={{ paddingTop: "45%" }}>
+          <div className="relative w-full " style={{ paddingTop: "40%" }}>
             <img
-              class="absolute  bottom-10 left-0 w-full h-full object-cover mb-18"
+              className="absolute  bottom-10 left-0 w-full h-full object-cover mb-18"
               src={`${URL_IMAGE + movie.backdrop_path}`}
               alt={movie.title}
             />
