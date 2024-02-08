@@ -2,9 +2,11 @@ import React from "react";
 
 export default function SearchBar() {
   return (
-    <div className="flex flex-col items-center border border-red-500 p-10">
-      <div>Stream +</div>
-      <div className="border border-purple-500  w-[1500px]">
+    <div className="flex flex-col items-center  pt-10">
+      <div>
+        <p className="text-5xl mb-5">Stream +</p>
+      </div>
+      <div className="w-[1500px]">
         <form className="container mb-4" action="">
           <input
             type="text"

@@ -22,11 +22,11 @@ const fetchCategories = async () => {
   }
 };
 const fetchTrailers = async (id) => {
-  console.log(id);
+  // console.log(id);
   try {
     const response = await axios.get(`http://localhost:3002/trailer/${id}`);
     const trailer = response.data;
-    console.log(response);
+    // console.log(response);
     return trailer;
   } catch (error) {
     throw new Error(error.message);

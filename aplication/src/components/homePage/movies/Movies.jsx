@@ -17,7 +17,7 @@ export default function Movies() {
   const fetchMovies = async () => {
     const filmes = await fetchData(); //bring movie data from the back
     dispatch(setAllMovies(filmes)); //put de data into redux state
-    setMovie(filmes[0]); //setting portada
+    setMovie(filmes[0]); //setting portada default
   };
 
   const nuevaPortada = (selectedMovieId) => {
@@ -29,8 +29,8 @@ export default function Movies() {
   };
 
   const selectMovie = async (selectedMovie) => {
-    fetchTrailer(selectedMovie.id);
     setMovie(selectedMovie);
+    fetchTrailer(selectedMovie.id);
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -41,11 +41,10 @@ export default function Movies() {
   };
 
   const fetchTrailer = async (id) => {
-    console.log(id); //llega el id perfecto
+    // console.log(id);
     try {
       const response = await fetchTrailers(id);
-
-      console.log(response); //ACA ESTA EL PROBLEMA NO RECIBE LA INFO
+      console.log(response);
       setTrailer(response);
     } catch (error) {
       console.error("Error fetching trailer:", error);
@@ -62,50 +61,64 @@ export default function Movies() {
 
   return (
     <div>
-      <div>
+      <div className="flex justify-center items-center">
         {movie ? (
-          <div className="relative w-full " style={{ paddingTop: "40%" }}>
+          <div className="relative w-full" style={{ paddingTop: "40%" }}>
             <img
-              className="absolute  bottom-10 left-0 w-full h-full object-cover mb-18"
+              className={`absolute bottom-0 left-0 w-full h-full object-cover mb-18 z-1 
+              ${playing ? "hidden" : ""}`}
               src={`${URL_IMAGE + movie.backdrop_path}`}
               alt={movie.title}
             />
-            {playing ? (
-              <>
-                <YouTube
-                  videoId={trailer.key}
-                  className="reproductor container w-full h-600"
-                  containerClassName={"youtube-container amru"}
-                  opts={{
-                    width: "100%",
-                    height: "100%",
-                    playerVars: {
-                      autoplay: 1,
-                      controls: 0,
-                      cc_load_policy: 0,
-                      fs: 0,
-                      iv_load_policy: 0,
-                      modestbranding: 0,
-                      rel: 0,
-                      showinfo: 0,
-                    },
-                  }}
-                />
-                <button onClick={() => setPlaying(false)}>Close</button>
-              </>
-            ) : (
-              <div>
-                <div className="">
-                  {trailer ? (
-                    <button onClick={() => setPlaying(true)} type="button">
+            <div className="flex flex-column gap-1">
+              <p className="absolute left-10 top-0 text-5xl mt-20 w-[1000px]">
+                {movie.title}
+              </p>
+              <p className="absolute left-10 top-0 text-xl mt-40 w-[700px] ">
+                {movie.overview}
+              </p>
+            </div>
+            {playing && trailer && (
+              <YouTube
+                videoId={trailer.key}
+                className="absolute top-0 left-0 w-full h-full"
+                containerClassName="youtube-container"
+                opts={{
+                  width: "100%",
+                  height: "100%",
+                  playerVars: {
+                    autoplay: 1,
+                    controls: 0,
+                    cc_load_policy: 0,
+                    fs: 0,
+                    iv_load_policy: 0,
+                    modestbranding: 0,
+                    rel: 0,
+                    showinfo: 0,
+                  },
+                }}
+              />
+            )}
+            {playing && (
+              <button
+                onClick={() => setPlaying(false)}
+                className="absolute left-1/2 transform  bottom-10 -translate-x-1/2 bg-gray-800 text-white px-3 py-1 rounded"
+              >
+                Close
+              </button>
+            )}
+            {!playing && (
+              <div className="absolute left-1/2 transform -translate-x-1/2 bottom-20 flex">
+                {trailer ? (
+                  <>
+                    <button
+                      onClick={() => setPlaying(true)}
+                      className="bg-blue-500 text-white px-3 py-1 rounded "
+                    >
                       Play Trailer
                     </button>
-                  ) : (
-                    "Sorry, no trailer available"
-                  )}
-                  {/* <h1 className="text-white">{trailer.title}</h1>
-                  <p className="text-white">{trailer.overview}</p> */}
-                </div>
+                  </>
+                ) : null}
               </div>
             )}
           </div>
@@ -118,7 +131,7 @@ export default function Movies() {
           ? reduxMovies.map((mov, index) => (
               <div key={index} onClick={() => selectMovie(mov)}>
                 <img
-                  className="border border-blue-400 h-[700px] "
+                  className="h-[700px] "
                   src={`${URL_IMAGE + mov.poster_path}`}
                   alt=""
                 />
