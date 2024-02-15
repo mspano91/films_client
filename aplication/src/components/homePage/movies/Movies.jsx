@@ -102,9 +102,9 @@ export default function Movies() {
             {playing && (
               <button
                 onClick={() => setPlaying(false)}
-                className="absolute left-1/2 transform  bottom-10 -translate-x-1/2 bg-gray-800 text-white px-3 py-1 rounded"
+                className="absolute left-20  bottom-10 -translate-x-1/2 bg-gray-800 text-white px-3 py-1 rounded"
               >
-                Close
+                Close Trailer
               </button>
             )}
             {!playing && (
@@ -125,8 +125,8 @@ export default function Movies() {
         ) : null}
       </div>
 
-      <h1> latest releases</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
+      <h1 className="text-5xl m-12"> Latest releases</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 m-12">
         {reduxMovies
           ? reduxMovies.map((mov, index) => (
               <div key={index} onClick={() => selectMovie(mov)}>

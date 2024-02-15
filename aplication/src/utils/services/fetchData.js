@@ -11,6 +11,18 @@ const fetchData = async () => {
   }
 };
 
+const fetchById = async (id) => {
+  console.log(id);
+  try {
+    const response = await axios.get(`http://localhost:3002/sections/${id}`);
+    const section = response.data;
+    console.log(section);
+    return section;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 const fetchCategories = async () => {
   try {
     const response = await axios.get(`http://localhost:3002/cat`);
@@ -21,8 +33,8 @@ const fetchCategories = async () => {
     throw new Error(error.message);
   }
 };
+
 const fetchTrailers = async (id) => {
-  // console.log(id);
   try {
     const response = await axios.get(`http://localhost:3002/trailer/${id}`);
     const trailer = response.data;
@@ -33,4 +45,4 @@ const fetchTrailers = async (id) => {
   }
 };
 
-module.exports = { fetchData, fetchCategories, fetchTrailers };
+module.exports = { fetchData, fetchCategories, fetchTrailers, fetchById };
