@@ -44,8 +44,8 @@ export default function Movies() {
     // console.log(id);
     try {
       const response = await fetchTrailers(id);
-      console.log(response);
-      setTrailer(response);
+      console.log(response.key);
+      setTrailer(response.key);
     } catch (error) {
       console.error("Error fetching trailer:", error);
     }
@@ -80,7 +80,7 @@ export default function Movies() {
             </div>
             {playing && trailer && (
               <YouTube
-                videoId={trailer.key}
+                videoId={trailer}
                 className="absolute top-0 left-0 w-full h-full"
                 containerClassName="youtube-container"
                 opts={{
