@@ -10,7 +10,9 @@ import { setAllCategories } from "@/redux/slice";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import YouTube from "react-youtube";
+// import YouTube from "react-youtube";
+import Modal from "../modal/Modal";
+
 const URL_IMAGE = "https://image.tmdb.org/t/p/original";
 
 export default function Categories() {
@@ -20,6 +22,7 @@ export default function Categories() {
   const [playing, setPlaying] = useState(false);
   const [trailer, setTrailer] = useState(null);
   const [movie, setMovie] = useState(null);
+  const [modal, setModal] = useState(false);
 
   const fetchCat = async () => {
     const cat = await fetchCategories();
@@ -39,12 +42,8 @@ export default function Categories() {
   };
 
   const selectMovie = (selectedMovie) => {
-    console.log(selectedMovie.id);
     setMovie(selectedMovie);
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+
     // Llamar a fetchTrailer después de actualizar el estado de la película
   };
 
@@ -101,6 +100,12 @@ export default function Categories() {
     slidesToScroll: 4,
   };
 
+  const handleModal = (mov) => {
+    setModal(!modal);
+    selectMovie(mov);
+    setTrailer(mov.id);
+  };
+
   return (
     <>
       <div className="border border-blue-500 m-12">
@@ -124,11 +129,17 @@ export default function Categories() {
                         alt={mov.title}
                         className="w-full h-auto"
                       />
-                      <button
+                      {/* <button
                         onClick={() => selectMovie(mov)}
                         className="border border-blue-500 p-2"
                       >
                         info
+                      </button> */}
+                      <button
+                        onClick={() => handleModal(mov)}
+                        className="border border-blue-500 p-2"
+                      >
+                        modal
                       </button>
                     </div>
                   ))}
@@ -136,51 +147,18 @@ export default function Categories() {
             </div>
           ))}
       </div>
-      <div>
-        {playing && trailer && (
-          <YouTube
-            videoId={trailer}
-            className="absolute top-0 left-0 w-full h-full"
-            containerClassName="youtube-container"
-            opts={{
-              width: "100%",
-              height: "100%",
-              playerVars: {
-                autoplay: 1,
-                controls: 0,
-                cc_load_policy: 0,
-                fs: 0,
-                iv_load_policy: 0,
-                modestbranding: 0,
-                rel: 0,
-                showinfo: 0,
-              },
-            }}
-          />
-        )}
-        {playing && (
-          <button
-            onClick={() => setPlaying(false)}
-            className="absolute left-20  bottom-10 -translate-x-1/2 bg-gray-800 text-white px-3 py-1 rounded"
-          >
-            Close Trailer
-          </button>
-        )}
-        {!playing && (
-          <div className="absolute left-1/2 transform -translate-x-1/2 bottom-20 flex">
-            {trailer ? (
-              <>
-                <button
-                  onClick={() => setPlaying(true)}
-                  className="bg-blue-500 text-white px-3 py-1 rounded "
-                >
-                  Play Trailer
-                </button>
-              </>
-            ) : null}
-          </div>
-        )}
-      </div>
+      <div></div>
+      {}
+      {modal && (
+        <Modal
+          modal={modal}
+          handleModal={handleModal}
+          setPlaying={setPlaying}
+          trailer={trailer}
+          playing={playing}
+          movie={movie}
+        />
+      )}
     </>
   );
 }
