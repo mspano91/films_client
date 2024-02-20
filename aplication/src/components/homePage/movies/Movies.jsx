@@ -61,20 +61,24 @@ export default function Movies() {
 
   return (
     <div>
-      <div className="flex justify-center items-center">
+      <div className="relative w-full flex justify-center  items-center">
         {movie ? (
-          <div className="relative w-full" style={{ paddingTop: "40%" }}>
+          // <div style={{ paddingTop: "40%" }}>
+          <div
+            style={{ paddingTop: "40%" }}
+            className="relative w-full max-w-[700px] h-[300px] sm:max-w-full border border-pink-500"
+          >
             <img
               className={`absolute bottom-0 left-0 w-full h-full object-cover mb-18 z-1 
               ${playing ? "hidden" : ""}`}
               src={`${URL_IMAGE + movie.backdrop_path}`}
               alt={movie.title}
             />
-            <div className="flex flex-column gap-1">
-              <p className="absolute left-10 top-0 text-5xl mt-20 w-[1000px]">
+            <div className="flex flex-column w-[700px] h-[300px] gap-1 absolute left-10 bottom-10 border border-blue-500">
+              <p className="flex text-5xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
                 {movie.title}
               </p>
-              <p className="absolute left-10 top-0 text-xl mt-40 w-[700px] ">
+              <p className="flex absolute text-l w-[700px] top-20 ">
                 {movie.overview}
               </p>
             </div>
