@@ -124,7 +124,7 @@ export default function Movies() {
           </div>
         ) : null}
       </div>
-      {/* begining for poster to discover films */}
+      {/* taking poster from redux state */}
       <h1 className="text-5xl m-12"> Latest releases</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 m-12">
         {reduxMovies

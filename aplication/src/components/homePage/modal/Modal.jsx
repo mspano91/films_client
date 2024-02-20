@@ -1,6 +1,5 @@
 "use client";
 import YouTube from "react-youtube";
-import { useState } from "react";
 const URL_IMAGE = "https://image.tmdb.org/t/p/original";
 
 export default function Modal({
@@ -11,10 +10,13 @@ export default function Modal({
   trailer,
   movie,
 }) {
-  //this a state and next function to cut the extended overview, just for show a little description
-
+  console.log(modal);
+  console.log(playing);
+  console.log(movie);
+  console.log(trailer);
   return (
     <div
+      //div modal wich fix modal in the middle of the screen
       className={`fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  flex justify-center items-center ${
         modal ? "" : "hidden"
       }`}
@@ -24,6 +26,7 @@ export default function Modal({
           "relative w-[900px] h-[700px] flex justify-center items-center rounded-xl  bg-zinc-950"
         }
       >
+        {/* if we have trailer and setplaying ON, so show the trailer */}
         {playing && trailer && (
           <YouTube
             videoId={trailer}
@@ -46,6 +49,7 @@ export default function Modal({
           />
         )}
 
+        {/* if we didnt turn ON play trailer so show me the poster and information, also buttom play and close */}
         {!playing && (
           <>
             <div className="absolute top-0 z-40">
@@ -64,9 +68,17 @@ export default function Modal({
             </div>
             <div className="absolute bg-zinc-950 rounded-b-xl bottom-0 p-6 z-50 w-[1200]">
               <p className="text-white pb-9 text-base">{movie.overview}</p>
+              <div className="relative  w-full flex justify-start h-8">
+                <p className="text-xl  bottom-0 ">
+                  {movie.vote_average.toString().slice(0, 3)}⭐
+                </p>
+                <p className="text-xl  bottom-0 left-14">
+                  {movie.release_date.slice(0, 4)}
+                </p>
+              </div>
             </div>
             <div className="absolute z-50 left-1/2 transform -translate-x-1/2 bottom-72 flex cursor-pointer ">
-              {trailer && (
+              {trailer && typeof trailer === "string" && (
                 <button
                   onClick={() => setPlaying(true)}
                   className="w-[200px] bg-blue-500 hover:bg-blue-700  text-white px-3 py-1 rounded "
@@ -84,6 +96,7 @@ export default function Modal({
           </>
         )}
 
+        {/* if playing is ON sho me the x button to quit it */}
         {playing && (
           <button
             onClick={() => setPlaying(false)}

@@ -24,11 +24,13 @@ export default function Categories() {
   const [movie, setMovie] = useState(null);
   const [modal, setModal] = useState(false);
 
+  //taking categories array and saving into redux state
   const fetchCat = async () => {
     const cat = await fetchCategories();
-    dispatch(setAllCategories(cat)); //taking categories array and saving into redux state
+    dispatch(setAllCategories(cat));
   };
 
+  //taking all films belonging a each section from the API
   const fetchSections = async (id) => {
     try {
       const sections = await fetchById(id);
@@ -41,10 +43,9 @@ export default function Categories() {
     }
   };
 
+  //select movie from body
   const selectMovie = (selectedMovie) => {
     setMovie(selectedMovie);
-
-    // Llamar a fetchTrailer después de actualizar el estado de la película
   };
 
   const fetchTrailer = async (id) => {
@@ -52,17 +53,30 @@ export default function Categories() {
     try {
       const response = await fetchTrailersCat(id);
       console.log(response.id);
-
-      // Comprobar si la película en el estado es la misma que la obtenida del servidor
+      console.log(response);
+      //check if movie state is the same as the server got
       if (movie.id === response.id) {
         const official = response.videos?.results;
         const officialTrailer = official.find(
           (vid) => vid.name === "Official Trailer"
         );
+        console.log(official);
+        console.log(officialTrailer);
+
         if (officialTrailer) {
           setTrailer(officialTrailer.key);
         } else {
-          console.log("No se encontró el tráiler oficial.");
+          // Si no se encuentra el tráiler oficial, reproducir el primer tráiler
+          const firstTrailer =
+            official.length > 0 ? official[official.length - 1] : null;
+          console.log(firstTrailer.key);
+          if (firstTrailer) {
+            console.log("Reproduciendo el primer tráiler:", firstTrailer);
+            setTrailer(firstTrailer.key);
+          } else {
+            console.log("No se encontraron tráilers disponibles.");
+            return null; // O cualquier valor por defecto que desees devolver
+          }
         }
       }
     } catch (error) {
@@ -103,25 +117,28 @@ export default function Categories() {
   const handleModal = (mov) => {
     setModal(!modal);
     selectMovie(mov);
-    setTrailer(mov.id);
+    setTrailer(mov);
   };
 
   return (
     <>
-      <div className="border border-blue-500 m-12">
+      <div className="m-12">
+        {/* taking from redux state the name of categories */}
         {categories &&
           categories.map((cat) => (
             <div key={cat.id} className="mb-8 ">
-              <h1 className="text-3xl font-bold mb-4 m-12">{cat.name}</h1>
+              <h1 className="text-5xl font-bold mb-4 ml-4">{cat.name}</h1>
 
+              {/* from each section render movies list and framework carrousel*/}
               <Slider {...settings}>
                 {sectionsByCategory[cat.id] &&
                   sectionsByCategory[cat.id].map((mov, secIndex) => (
                     <div
-                      className="border border-yellow-500 p-4"
+                      className="p-4 cursor-pointer"
                       key={secIndex}
+                      onClick={() => handleModal(mov)}
                     >
-                      <h1 className="font-roboto text-s overflow-hidden whitespace-nowrap overflow-ellipsis">
+                      <h1 className="font-roboto text-s p-2 overflow-hidden whitespace-nowrap overflow-ellipsis">
                         {mov.title}
                       </h1>
                       <img
@@ -129,17 +146,11 @@ export default function Categories() {
                         alt={mov.title}
                         className="w-full h-auto"
                       />
-                      {/* <button
-                        onClick={() => selectMovie(mov)}
-                        className="border border-blue-500 p-2"
-                      >
-                        info
-                      </button> */}
                       <button
                         onClick={() => handleModal(mov)}
-                        className="border border-blue-500 p-2"
+                        className=" hover:text-blue-500 p-2"
                       >
-                        modal
+                        info +
                       </button>
                     </div>
                   ))}
