@@ -112,6 +112,22 @@ export default function Categories() {
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 4,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   const handleModal = (mov) => {
@@ -127,18 +143,24 @@ export default function Categories() {
         {categories &&
           categories.map((cat) => (
             <div key={cat.id} className="mb-8 ">
-              <h1 className="text-5xl font-bold mb-4 ml-4">{cat.name}</h1>
-
+              <h1 className="mb-4 flex text-xl lg:text-2xl xl:text-5xl ">
+                {" "}
+                {cat.name}
+              </h1>
               {/* from each section render movies list and framework carrousel*/}
               <Slider {...settings}>
                 {sectionsByCategory[cat.id] &&
                   sectionsByCategory[cat.id].map((mov, secIndex) => (
                     <div
-                      className="p-4 cursor-pointer"
+                      className="p-1 relative cursor-pointer"
                       key={secIndex}
                       onClick={() => handleModal(mov)}
                     >
-                      <h1 className="font-roboto text-s p-2 overflow-hidden whitespace-nowrap overflow-ellipsis">
+                      <h1
+                        className=" bg-black bg-opacity-20 w-full ml-10 rounded-sm absolute bottom-24 
+                        font-roboto text-xs sm:text-xs md:text-sm lg:text-sm xl:text-xl 
+                        p-2 overflow-hidden whitespace-nowrap overflow-ellipsis"
+                      >
                         {mov.title}
                       </h1>
                       <img

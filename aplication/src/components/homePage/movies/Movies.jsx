@@ -66,7 +66,7 @@ export default function Movies() {
           // <div style={{ paddingTop: "40%" }}>
           <div
             style={{ paddingTop: "40%" }}
-            className="relative w-full max-w-[700px] h-[300px] sm:max-w-full border border-pink-500"
+            className="relative w-full max-w-[700px] h-[300px] sm:max-w-full"
           >
             <img
               className={`absolute bottom-0 left-0 w-full h-full object-cover mb-18 z-1 
@@ -74,11 +74,11 @@ export default function Movies() {
               src={`${URL_IMAGE + movie.backdrop_path}`}
               alt={movie.title}
             />
-            <div className="flex flex-column w-[700px] h-[300px] gap-1 absolute left-10 bottom-10 border border-blue-500">
-              <p className="flex text-5xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
+            <div className="flex flex-column xl:w-2/3 md:w-1/3 w-100 h-[250px] gap-1 absolute left-0 bottom-10 ">
+              <p className="flex text-xl lg:text-2xl xl:text-5xl p-6">
                 {movie.title}
               </p>
-              <p className="flex absolute text-l w-[700px] top-20 ">
+              <p className="flex absolute text-xs sm:text-xs md:text-xs lg:text-xs xl:text-lg w-full top-20 p-4">
                 {movie.overview}
               </p>
             </div>
@@ -112,12 +112,12 @@ export default function Movies() {
               </button>
             )}
             {!playing && (
-              <div className="absolute left-1/2 transform -translate-x-1/2 bottom-20 flex">
+              <div className="absolute left-1/2 transform -translate-x-1/2 bottom-10 flex xl:bottom-2/4 ">
                 {trailer ? (
                   <>
                     <button
                       onClick={() => setPlaying(true)}
-                      className="bg-blue-500 text-white px-3 py-1 rounded "
+                      className="bg-blue-500 text-white px-3 py-1 rounded"
                     >
                       Play Trailer
                     </button>
@@ -129,7 +129,10 @@ export default function Movies() {
         ) : null}
       </div>
       {/* taking poster from redux state */}
-      <h1 className="text-5xl m-12"> Latest releases</h1>
+      <h1 className="m-12 flex text-xl lg:text-2xl xl:text-5xl ">
+        {" "}
+        Latest releases
+      </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 m-12">
         {reduxMovies
           ? reduxMovies.map((mov, index) => (
