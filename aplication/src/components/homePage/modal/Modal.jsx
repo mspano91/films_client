@@ -17,7 +17,7 @@ export default function Modal({
   return (
     <div
       //div modal wich fix modal in the middle of the screen
-      className={`fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  flex justify-center items-center ${
+      className={`fixed w-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  flex justify-center items-center ${
         modal ? "" : "hidden"
       }`}
     >

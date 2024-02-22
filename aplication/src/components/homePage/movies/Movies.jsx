@@ -51,6 +51,15 @@ export default function Movies() {
     }
   };
 
+  const truncateOverview = (overview) => {
+    const words = overview.split(" ");
+    if (words.length >= 40) {
+      return words.slice(0, 40).join(" ");
+    } else {
+      return overview;
+    }
+  };
+
   useEffect(() => {
     fetchMovies(); // call movies array
   }, []);
@@ -61,11 +70,10 @@ export default function Movies() {
 
   return (
     <div>
-      <div className="relative w-full flex justify-center  items-center">
+      <div className="relative w-full flex justify-center items-center">
         {movie ? (
-          // <div style={{ paddingTop: "40%" }}>
           <div
-            style={{ paddingTop: "40%" }}
+            style={{ paddingBottom: "45%" }}
             className="relative w-full max-w-[700px] h-[300px] sm:max-w-full"
           >
             <img
@@ -74,12 +82,10 @@ export default function Movies() {
               src={`${URL_IMAGE + movie.backdrop_path}`}
               alt={movie.title}
             />
-            <div className="flex flex-column xl:w-2/3 md:w-1/3 w-100 h-[250px] gap-1 absolute left-0 bottom-10 ">
-              <p className="flex text-xl lg:text-2xl xl:text-5xl p-6">
-                {movie.title}
-              </p>
-              <p className="flex absolute text-xs sm:text-xs md:text-xs lg:text-xs xl:text-lg w-full top-20 p-4">
-                {movie.overview}
+            <div className="flex flex-column w-10/12 h-[250px] gap-1 absolute left-0 bottom-10  ">
+              <p className="flex text-3xl xl:text-5xl p-6">{movie.title}</p>
+              <p className="flex absolute text-transparent text-lg md:text-white w-full top-20 p-4 ">
+                {truncateOverview(movie.overview) + "..."}
               </p>
             </div>
             {playing && trailer && (
@@ -112,7 +118,7 @@ export default function Movies() {
               </button>
             )}
             {!playing && (
-              <div className="absolute left-1/2 transform -translate-x-1/2 bottom-10 flex xl:bottom-2/4 ">
+              <div className="absolute left-1/2 transform -translate-x-1/2 flex xl:bottom-1/4  lg:bottom-40 md:bottom-40 bottom-10">
                 {trailer ? (
                   <>
                     <button
