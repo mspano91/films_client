@@ -6,8 +6,10 @@ import Movies from "./movies/Movies";
 const HomePage = () => {
   return (
     <>
-      <Movies />
-      <Categories />
+      <div>
+        <Movies />
+        <Categories />
+      </div>
     </>
   );
 };

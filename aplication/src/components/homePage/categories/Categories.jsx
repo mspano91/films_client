@@ -143,7 +143,7 @@ export default function Categories() {
         {categories &&
           categories.map((cat) => (
             <div key={cat.id} className="mb-8 ">
-              <h1 className="mb-4 flex text-xl lg:text-2xl xl:text-5xl ">
+              <h1 className="mb-4 flex text-xl lg:text-2xl xl:text-5xl text-black dark:text-white ">
                 {" "}
                 {cat.name}
               </h1>
@@ -157,7 +157,7 @@ export default function Categories() {
                       onClick={() => handleModal(mov)}
                     >
                       <h1
-                        className=" bg-black bg-opacity-20 w-full ml-10 rounded-sm absolute bottom-24 
+                        className="text-white bg-black bg-opacity-20 w-full ml-10 rounded-sm absolute bottom-24 
                         font-roboto text-xs sm:text-xs md:text-sm lg:text-sm xl:text-xl 
                         p-2 overflow-hidden whitespace-nowrap overflow-ellipsis"
                       >

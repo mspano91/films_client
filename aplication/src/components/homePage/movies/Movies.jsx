@@ -83,7 +83,9 @@ export default function Movies() {
               alt={movie.title}
             />
             <div className="flex flex-column w-10/12 h-[250px] gap-1 absolute left-0 bottom-10  ">
-              <p className="flex text-3xl xl:text-5xl p-6">{movie.title}</p>
+              <p className="flex text-3xl xl:text-5xl p-6 text-white">
+                {movie.title}
+              </p>
               <p className="flex absolute text-transparent text-lg md:text-white w-full top-20 p-4 ">
                 {truncateOverview(movie.overview) + "..."}
               </p>
@@ -112,7 +114,7 @@ export default function Movies() {
             {playing && (
               <button
                 onClick={() => setPlaying(false)}
-                className="absolute left-20  bottom-10 -translate-x-1/2 bg-gray-800 text-white px-3 py-1 rounded"
+                className=" absolute left-20  bottom-10 -translate-x-1/2 bg-gray-800 text-white px-3 py-1 rounded"
               >
                 Close Trailer
               </button>
@@ -123,7 +125,7 @@ export default function Movies() {
                   <>
                     <button
                       onClick={() => setPlaying(true)}
-                      className="bg-blue-500 text-white px-3 py-1 rounded"
+                      className="bg-blue-500 text-white px-3 py-1 rounded dark:bg-red-400"
                     >
                       Play Trailer
                     </button>
