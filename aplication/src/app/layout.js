@@ -1,7 +1,7 @@
 import { Roboto } from "next/font/google";
 import ReduxProvider from "@/redux/ReduxProvider";
 import "./globals.css";
-import Nav from "@/components/nav/Nav";
+// import Nav from "@/components/nav/Nav";
 
 const roboto = Roboto({ weight: ["400"], subsets: ["latin"] });
 
@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
       <body className={`${roboto.className} dark:bg-black`}>
         {" "}
         <ReduxProvider>
-          <Nav />
+          {/* <Nav /> */}
           {children}
         </ReduxProvider>
       </body>

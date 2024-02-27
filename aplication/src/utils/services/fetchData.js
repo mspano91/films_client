@@ -11,6 +11,20 @@ const fetchData = async () => {
   }
 };
 
+const fetchSearch = async (searchKey) => {
+  console.log(searchKey);
+  try {
+    const response = await axios.get(
+      `http://localhost:3002/movies/${searchKey}`
+    );
+    const movies = response.data;
+    console.log(movies);
+    return movies;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 const fetchById = async (id) => {
   console.log(id);
   try {
@@ -63,4 +77,5 @@ module.exports = {
   fetchCategories,
   fetchTrailers,
   fetchById,
+  fetchSearch,
 };

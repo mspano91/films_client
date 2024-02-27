@@ -1,14 +1,20 @@
-import { setAllMovies } from "@/redux/slice";
-import { fetchData, fetchTrailers } from "@/utils/services/fetchData";
+import { setAllMovies, setAllSearch } from "@/redux/slice";
+import {
+  fetchData,
+  fetchTrailers,
+  fetchSearch,
+} from "@/utils/services/fetchData";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import YouTube from "react-youtube";
+import Nav from "@/components/nav/Nav";
 
 const URL_IMAGE = "https://image.tmdb.org/t/p/original";
 
 export default function Movies() {
   const dispatch = useDispatch();
   const reduxMovies = useSelector((state) => state.movies.allMovies);
+  const reduxSearchKey = useSelector((state) => state.movies.Allsearch);
   const [playing, setPlaying] = useState(false);
   const [trailer, setTrailer] = useState(null);
   const [portada, setPortada] = useState(null);
@@ -18,6 +24,14 @@ export default function Movies() {
     const filmes = await fetchData(); //bring movie data from the back
     dispatch(setAllMovies(filmes)); //put de data into redux state
     setMovie(filmes[0]); //setting portada default
+  };
+
+  const fetchKeyWord = async (searchKey) => {
+    console.log(searchKey);
+    const keyWord = await fetchSearch(searchKey);
+    console.log(keyWord);
+    dispatch(setAllSearch(keyWord));
+    setMovie(keyWord[0]);
   };
 
   const nuevaPortada = (selectedMovieId) => {
@@ -51,6 +65,11 @@ export default function Movies() {
     }
   };
 
+  const searchMovies = (searchKey) => {
+    console.log(searchKey);
+    fetchKeyWord(searchKey);
+  };
+
   const truncateOverview = (overview) => {
     const words = overview.split(" ");
     if (words.length >= 40) {
@@ -67,9 +86,11 @@ export default function Movies() {
   useEffect(() => {
     nuevaPortada();
   }, [reduxMovies, movie]); // when movie state change, useEffect call again nuevaPortada function to update
+  console.log(reduxSearchKey);
 
   return (
     <div>
+      <Nav searchMovies={searchMovies} />
       <div className="relative w-full flex justify-center items-center">
         {movie ? (
           <div
@@ -142,8 +163,8 @@ export default function Movies() {
         Latest releases
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 m-12">
-        {reduxMovies
-          ? reduxMovies.map((mov, index) => (
+        {reduxSearchKey.length > 0
+          ? reduxSearchKey.map((mov, index) => (
               <div key={index} onClick={() => selectMovie(mov)}>
                 <img
                   className="h-[700px] "
@@ -152,7 +173,16 @@ export default function Movies() {
                 />
               </div>
             ))
-          : null}
+          : reduxMovies &&
+            reduxMovies.map((mov, index) => (
+              <div key={index} onClick={() => selectMovie(mov)}>
+                <img
+                  className="h-[700px] "
+                  src={`${URL_IMAGE + mov.poster_path}`}
+                  alt=""
+                />
+              </div>
+            ))}
       </div>
     </div>
   );

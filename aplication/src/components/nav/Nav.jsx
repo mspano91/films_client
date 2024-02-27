@@ -2,6 +2,6 @@
 
 import SearchBar from "./searchBar/SearchBar";
 
-export default function Nav() {
-  return <SearchBar />;
+export default function Nav({ searchMovies }) {
+  return <SearchBar searchMovies={searchMovies} />;
 }

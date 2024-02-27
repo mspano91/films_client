@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   allMovies: [],
-  copyMovies: [],
+  Allsearch: [],
   categories: [],
 };
 
@@ -12,15 +12,18 @@ export const moviesSlice = createSlice({
   reducers: {
     setAllMovies: (state, action) => {
       state.allMovies = action.payload;
-      state.copyMovies = action.payload;
     },
     setAllCategories: (state, action) => {
       state.categories = action.payload;
+    },
+    setAllSearch: (state, action) => {
+      state.Allsearch = action.payload;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setAllMovies, setAllCategories } = moviesSlice.actions;
+export const { setAllMovies, setAllCategories, setAllSearch } =
+  moviesSlice.actions;
 
 export default moviesSlice.reducer;
