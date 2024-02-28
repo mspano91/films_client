@@ -30,6 +30,7 @@ export default function SearchBar({ searchMovies }) {
     e.preventDefault();
     console.log(searchKey);
     searchMovies(searchKey); // Llama a la función handleSearch pasada desde Movies
+    setSearchKey("");
   };
 
   return (
@@ -38,13 +39,13 @@ export default function SearchBar({ searchMovies }) {
         <p className="text-5xl mb-5 dark:text-white">Stream +</p>
       </div>
       <div className="w-full flex justify-center">
-        {/* this button is for darkMood just triying */}
         <form
           className="flex gap-2 container mb-4"
           onSubmit={handleSearchSubmit}
         >
           <input
             onChange={(e) => setSearchKey(e.target.value)}
+            value={searchKey}
             type="text"
             placeholder="search..."
             className="w-full p-3 text-black dark:text-white bg-black bg-opacity-15 dark:bg-white dark:bg-opacity-25 rounded-md border border-transparent focus:border-purple-500 dark:focus:border-blue-500 focus:outline-none transition duration-300 "
@@ -52,14 +53,14 @@ export default function SearchBar({ searchMovies }) {
           <button className="category rounded-md border p-3 text-lg font-thin text-white bg-gray-900 cursor-pointer transition duration-250 focus:outline-none focus:border-blue-500 focus-visible:outline-blue-500 hover:border-blue-500">
             search
           </button>
-          <button
+          {/* <button
             type="button"
             onClick={handleDarkMode}
             className="flex border bottom-2 p-3 font-thin text-white bg-gray-900 hover:bg-blue-600 rounded-lg  items-center focus-visible:outline-blue-500"
           >
             {" "}
             light{" "}
-          </button>
+          </button> */}
         </form>
       </div>
     </div>

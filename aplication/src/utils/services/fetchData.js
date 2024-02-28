@@ -21,7 +21,7 @@ const fetchSearch = async (searchKey) => {
     console.log(movies);
     return movies;
   } catch (error) {
-    throw new Error(error.message);
+    alert("not founded");
   }
 };
 
@@ -33,6 +33,7 @@ const fetchById = async (id) => {
     console.log(section);
     return section;
   } catch (error) {
+    console.log(error);
     throw new Error(error.message);
   }
 };

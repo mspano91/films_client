@@ -10,10 +10,10 @@ export default function Modal({
   trailer,
   movie,
 }) {
-  console.log(modal);
-  console.log(playing);
-  console.log(movie);
-  console.log(trailer);
+  // console.log(modal);
+  // console.log(playing);
+  // console.log(movie);
+  // console.log(trailer);
   return (
     <div
       //div modal wich fix modal in the middle of the screen
@@ -69,10 +69,10 @@ export default function Modal({
             <div className="absolute bg-zinc-950 rounded-b-xl bottom-0 p-6 z-50 w-[1200]">
               <p className="text-white pb-9 text-base">{movie.overview}</p>
               <div className="relative  w-full flex justify-start h-8">
-                <p className="text-xl  bottom-0 ">
+                <p className="text-xl  bottom-0 text-white ">
                   {movie.vote_average.toString().slice(0, 3)}⭐
                 </p>
-                <p className="text-xl  bottom-0 left-14">
+                <p className="text-xl  text-white  bottom-0 left-14">
                   {movie.release_date.slice(0, 4)}
                 </p>
               </div>

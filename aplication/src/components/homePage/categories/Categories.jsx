@@ -170,7 +170,7 @@ export default function Categories() {
                       />
                       <button
                         onClick={() => handleModal(mov)}
-                        className=" hover:text-blue-500 p-2"
+                        className="dark:text-white hover:text-blue-500 p-2"
                       >
                         info +
                       </button>
