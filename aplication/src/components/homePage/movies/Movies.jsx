@@ -114,7 +114,7 @@ export default function Movies() {
           <div className="relative w-full flex justify-center items-center">
             {movie ? (
               <div
-                style={{ paddingBottom: "45%" }}
+                style={{ paddingBottom: "55%" }}
                 className="relative w-full max-w-[700px] h-[300px] sm:max-w-full"
               >
                 <div
@@ -130,10 +130,10 @@ export default function Movies() {
                   }}
                 >
                   <div className="flex flex-column w-10/12 h-[250px] gap-1 absolute left-0 bottom-10">
-                    <p className="flex text-3xl xl:text-5xl p-6 text-white">
+                    <p className="flex text-3xl xl:text-5xl px-12 text-white">
                       {movie.title}
                     </p>
-                    <p className="flex absolute text-transparent text-lg md:text-white w-full top-20 p-4">
+                    <p className="flex absolute text-transparent text-lg md:text-white w-full top-20 px-12">
                       {truncateOverview(movie.overview) + "..."}
                     </p>
                   </div>
@@ -184,7 +184,7 @@ export default function Movies() {
                     <div>
                       <button
                         onClick={handleReset}
-                        className="z-1 absolute top-0 right-6 m-4 bg-gray-700 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                        className="z-50 absolute w-5 h-5 lg:w-10 xl:w-10 lg:h-10 xl:h-10 text-xs top-0 right-6 m-4 xl:m-10 lg:m-10 bg-gray-700 hover:bg-red-700 text-white font-thin xl:py-2 xl:px-4 lg:py-2 lg:px-4 rounded"
                       >
                         X
                       </button>

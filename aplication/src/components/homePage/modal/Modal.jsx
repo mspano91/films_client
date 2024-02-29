@@ -60,7 +60,7 @@ export default function Modal({
                     alt={movie.title}
                     className="w-full h-full rounded-t-xl "
                   />
-                  <h1 className="absolute text-white text-left text-4xl bottom-16 pl-6 ">
+                  <h1 className="absolute text-white text-left text-4xl bottom-20 pl-6 ">
                     {movie.title}
                   </h1>
                 </>
